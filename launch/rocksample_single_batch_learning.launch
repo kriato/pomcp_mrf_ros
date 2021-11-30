@@ -1,0 +1,119 @@
+<launch>
+    <!-- TIMEOUT SET TO A REALLY HUGE NUMBER -->
+    <arg name="batch" default=""/>
+    <arg name="batch_seed" default=""/>
+    <arg name="expfolder" default=""/>
+    <arg name="configfile" default=""/>
+    <arg name="exp_path" default=""/>
+
+    <rosparam file="$(find pomcp_ros)/params/shared_params.yml" command="load"/>
+
+    <!-- Path of initial configurations file -->
+    <param name="config_path" type="string" value="$(arg exp_path)/$(arg expfolder)/$(arg configfile)_$(arg batch).txt" />
+
+    <!-- launch-prefix="xterm -e gdb double- args" -->
+    <!-- launch-prefix="gdb - -args -->
+    <node name="pomcp$(arg batch)" pkg="pomcp_ros" type="start_pomcp" args="" respawn="false" output="screen" cwd="node" >
+        <param name="reward_exit_grid" type="double" value="10" />
+        <param name="reward_move" type="double" value="0" />
+        <param name="reward_check" type="double" value="0" />
+
+        <!-- OTHER -->
+        <param name="seed" type="int" value="$(arg batch_seed)" />
+        <!-- If true, the execution is done without the robot -->
+        <param name="online" type="bool" value="True" />
+        <!-- Problem to run-->
+        <param name="problem" type="string" value="rosrocksample" />
+        <!-- Summary output file [CURRENTLY NOT USED] -->
+        <param name="outputfile" type="string" value="" />
+        <!-- History output file -->
+        <param name="history_outputfile" type="string" value="$(arg exp_path)/$(arg expfolder)/history_rocksample_output_$(arg batch).txt" />
+        <!-- Belief output file -->
+        <param name="belief_outputfile" type="string" value="$(arg exp_path)/$(arg expfolder)/beliefs_$(arg batch).txt" />
+        <!-- RND output file -->
+        <param name="rnd_outputfile" type="string" value="$(arg exp_path)/$(arg expfolder)/rnd_$(arg batch).txt" />
+        <!-- RND output file -->
+        <param name="replay_bel_outputfile" type="string" value="$(arg exp_path)/$(arg expfolder)/replay_beliefs_$(arg batch).txt" />
+        <!-- RND output file -->
+        <param name="discr_outfile" type="string" value="$(arg exp_path)/$(arg expfolder)/discr_$(arg batch).txt" />
+        <!-- Policy file (explicit POMDPs only) -->
+        <param name="policy" type="string" value="" />
+        <!-- Run unit tests and terminate-->
+        <param name="test" type="bool" value="False" />
+
+
+        <!-- MCTS PARAMETERS -->
+        <!-- Verbosity level [0 disable, 1-2-3-4 diffefrent levels ]-->
+        <param name="verbose" type="int" value="0" />
+        <!-- Manual value for UCB exploration constant -->
+        <param name="exploration" type="double" value="1.0" />
+        <!-- Enable RAVE -->
+        <param name="userave" type="bool" value="False" />
+        <!-- RAVE discount factor -->
+        <param name="ravediscount" type="double" value="1.0" />
+        <!-- RAVE bias constant -->
+        <param name="raveconstant" type="double" value="0.01" />
+        <!-- Use 1-ply rollout action selection -->
+        <param name="disabletree" type="bool" value="False" />
+        <!-- Use transforms -->
+        <param name="usetransforms" type="bool" value="True" />
+
+
+        <!-- MRF PARAMETERS -->
+        <!-- If true, MRF are learned for each run -->
+        <param name="learnMRF" type="bool" value="True" />
+        <!-- If true, MRF are learned for each run -->
+        <param name="output_path" type="string" value="$(arg exp_path)/$(arg expfolder)/mrfOutput_$(arg batch).txt" />
+        <!-- Number of connected components -->
+        <!-- <param name="nconncomp" type="int" value="2" /> -->
+        <!-- Relative probability -->
+        <!-- <param name="relprob" type="double" value="0.9" /> -->
+        <!-- Number of samples in MRF -->
+        <!-- <param name="nsamples" type="int" value="10000" /> -->
+        <!-- Number of runs for the learning phase -->
+        <param name="learning_runs" type="int" value="20" />
+        <!-- Number of steps for each run in the learning phase -->
+        <param name="learning_steps" type="int" value="60" />
+        <!-- Number of simulations each step -->
+        <param name="learning_sims" type="int" value="100000" />
+        <!-- Grid size in the learning phase -->
+        <param name="learning_grid_size" type="int" value="5" />
+        <!-- Number of rocks in the learning phase -->
+        <param name="learning_rock_number" type="int" value="8" />
+
+
+        <!-- EXPERIMENT PARAMETERS -->
+        <!-- Timeout (in seconds) -->
+        <param name="timeout" type="double" value="10000000" />
+        <!-- Number of runs -->
+        <param name="runs" type="int" value="1" />
+        <!-- Accuracy level used to determine horizon -->
+        <param name="accuracy" type="double" value="0.01" />
+        <!-- Horizon to use when not discounting -->
+        <param name="horizon" type="int" value="1000" />
+        <!-- Number of steps to run when using average reward -->
+        <param name="numsteps" type="int" value="100000" />
+        <!-- Automatically assign UCB exploration constant -->
+        <param name="autoexploration" type="bool" value="True" />
+        <!-- Minimum power of two simulations -->
+        <param name="mindoubles" type="double" value="13.0" />
+        <!-- Maximum power of two simulations -->
+        <param name="maxdoubles" type="double" value="19.0" />
+        <!-- Relative power of two for transforms compared to simulations -->
+        <param name="transformdoubles" type="int" value="-4" />
+        <!-- Number of attempts for each transform -->
+        <param name="transformattempts" type="int" value="1000" />
+
+        <!-- KNOWLEDGE -->
+        <!-- Prior value for preferred actions during smart tree search -->
+        <param name="smarttreevalue" type="double" value="1.0" />
+        <!-- Knowledge level in tree (0=Pure, 1=Legal, 2=Smart) -->
+        <param name="treeknowledge" type="int" value="1" />
+        <!-- Knowledge level in rollouts (0=Pure, 1=Legal, 2=Smart) -->
+        <param name="rolloutknowledge" type="int" value="1" />
+        <!-- Prior count for preferred actions during smart tree search -->
+        <param name="smarttreecount" type="int" value="10" />
+        <!-- "Level of knowledge about state-variable relationships: 0=no, 1=MRF, 2=Oracle" -->
+        <param name="relknowlevel" type="int" value="0" />
+    </node>
+</launch>

@@ -1,0 +1,14 @@
+grid_size: 5
+rock_number: 8
+square_size: 0.5
+
+plan2env_obs_topic: plan2env_obs
+env2plan_obs_topic: env2plan_obs
+env_info_topic: env_info
+agent_goal_topic: agent_goal
+agent_fb_topic: agent_fb
+reset_pub_topic: reset_run
+
+robot_base_tf: base_footprint
+
+config_path: /path/to/config.txt

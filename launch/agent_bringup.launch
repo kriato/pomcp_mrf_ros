@@ -1,0 +1,31 @@
+<launch>
+    <arg name="move_base" default="true" />
+    <arg name="model" default="waffle_pi" doc="model type [burger, waffle, waffle_pi]"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+
+    <node name="agent" pkg="pomcp_ros" type="start_agent" args="" respawn="false" output="screen">
+        <rosparam file="$(find pomcp_ros)/params/agent_start.yml" command="load"/>
+
+        <param name="use_move_base" type="bool" value="$(arg move_base)" />
+        <param name="model" type="string" value="$(arg model)" />
+        <param name="move_base_topic" type="string" value="/move_base_simple/goal" />
+        <param name="move_base_fb_topic" type="string" value="/move_base/result" />
+        <param name="rate" type="int" value="50" />
+        <param name="angular_vel" type="double" value="0.15" />
+        <param name="linear_vel" type="double" value="0.26" />
+        <param name="angular_error" type="double" value="5.0" />
+        <param name="linear_error" type="double" value="0.05" />
+        <param name="odom_frame" type="string" value="odom" />
+        <param name="base_frame" type="string" value="base_footprint" />
+        <param name="cmd_vel_topic" type="string" value="cmd_vel" />
+    </node>
+
+    <include file="$(find pomcp_ros)/launch/move_base.launch">
+        <arg name="move_forward_only" value="false"/>
+    </include>
+
+</launch>
