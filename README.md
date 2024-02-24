@@ -90,7 +90,7 @@ roslaunch pomcp_ros rocksample_single_batch_learning.launch
 ```
 
 ## References
-Maddalena Zuccotto, Marco Piccinelli, Alberto Castellini, Enrico Marchesini and Alessandro Farinelli, "Learning state-variable relationships in POMCP: a framework for mobile robots." (Submitted)
+Zuccotto, M., Piccinelli, M., Castellini, A., Marchesini, E. and Farinelli, A., 2022. Learning State-Variable Relationships in POMCP: A Framework for Mobile Robots. Frontiers in Robotics and AI, 9
 
 Department of Computer Science, University of Verona
 
