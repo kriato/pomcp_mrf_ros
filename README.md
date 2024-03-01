@@ -12,7 +12,11 @@ Overview:
 
 - [References](#References)
 
-![](Video_learning.mp4)
+
+
+https://github.com/kriato/pomcp_mrf_ros/assets/26410045/b817f37f-fac7-4521-9faa-975ce587b325
+
+
 
 ## Installation
 Follow this [link](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/) to install the missing dependencies to run the benchmark problem with Turtlebot3.
