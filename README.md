@@ -14,7 +14,9 @@ Overview:
 
 
 
-https://github.com/kriato/pomcp_mrf_ros/assets/26410045/b817f37f-fac7-4521-9faa-975ce587b325
+
+https://github.com/kriato/pomcp_mrf_ros/assets/26410045/511585dc-4849-4979-9dd4-7ff76c9cd185
+
 
 
 
